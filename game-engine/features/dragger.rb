@@ -12,7 +12,7 @@ class Dragger
     @container.mouse_left_button_up do |s,e|
       @click = nil
     end
-    @obj.mouse_move do |s,e|
+    @container.mouse_move do |s,e|
       if @click
         mouse_pos = e.get_position @container 
         Canvas.set_left @obj, mouse_pos.x - @click.x

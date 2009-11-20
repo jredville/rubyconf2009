@@ -100,6 +100,27 @@ class Tracker
   end
 end
 
+class Processor
+  def initialize klass
+    @obj = klass.new
+    @obj.setup($canvas)
+    $canvas.mouse_left_button_down.add @obj.method(:mouse_pressed) if @obj.respond_to? :mouse_pressed
+    $canvas.mouse_left_button_up.add @obj.method(:mouse_released) if @obj.respond_to? :mouse_released
+    $canvas.mouse_move.add @obj.method(:mouse_dragged) if @obj.respond_to? :mouse_dragged
+  end
+    
+  def update
+    @obj.draw
+  end
+end
+
+#doesn't work yet
+#def process klass
+  #$p = Processor.new klass 
+  #self.class.send(:define_method, :callback) {$p.update}
+#end
+
+
 def bounce target
   Tracker.new rand(10) - 5, rand(10) - 5
 end
